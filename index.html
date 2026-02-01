@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script src="https://portslocked.com/fa/a8/f4/faa8f49ae23c0ab13fcafec19e5c3f7a.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Earnmoney</title>
@@ -199,7 +200,7 @@
                 <div class="space-y-3 pt-2">
                     <p class="text-xs text-gray-500 uppercase font-bold ml-1">Community & Support</p>
                     
-                    <a id="link-telegram-btn" href="#" target="_blank" class="card-bg p-4 rounded-xl flex items-center justify-between hover:bg-[#252525] transition-colors border border-transparent hover:border-gray-700">
+                    <a id="link-telegram-btn" href="https://t.me/onlineearning01OE" target="_blank" class="card-bg p-4 rounded-xl flex items-center justify-between hover:bg-[#252525] transition-colors border border-transparent hover:border-gray-700">
                         <div class="flex items-center gap-3">
                             <div class="p-2 bg-blue-500/10 rounded-lg text-blue-400"><i data-lucide="send" class="w-5 h-5"></i></div>
                             <span class="font-medium">Join Our Official Telegram</span>
@@ -207,7 +208,7 @@
                         <i data-lucide="chevron-right" class="w-5 h-5 text-gray-600"></i>
                     </a>
 
-                    <a id="link-facebook-btn" href="#" target="_blank" class="card-bg p-4 rounded-xl flex items-center justify-between hover:bg-[#252525] transition-colors border border-transparent hover:border-gray-700">
+                    <a id="link-facebook-btn" href="https://www.facebook.com/profile.php?id=61587472494406" target="_blank" class="card-bg p-4 rounded-xl flex items-center justify-between hover:bg-[#252525] transition-colors border border-transparent hover:border-gray-700">
                         <div class="flex items-center gap-3">
                             <div class="p-2 bg-blue-700/10 rounded-lg text-blue-600"><i data-lucide="facebook" class="w-5 h-5"></i></div>
                             <span class="font-medium">Join Our Official Facebook</span>
@@ -215,7 +216,7 @@
                         <i data-lucide="chevron-right" class="w-5 h-5 text-gray-600"></i>
                     </a>
 
-                    <a id="link-admin-btn" href="#" target="_blank" class="card-bg p-4 rounded-xl flex items-center justify-between hover:bg-[#252525] transition-colors border border-transparent hover:border-gray-700">
+                    <a id="link-admin-btn" href="https://bdbonuscom.blogspot.com" target="_blank" class="card-bg p-4 rounded-xl flex items-center justify-between hover:bg-[#252525] transition-colors border border-transparent hover:border-gray-700">
                         <div class="flex items-center gap-3">
                             <div class="p-2 bg-green-500/10 rounded-lg text-green-400"><i data-lucide="message-circle" class="w-5 h-5"></i></div>
                             <span class="font-medium">Contact Admin</span>
@@ -352,7 +353,6 @@
             try {
                 const configSnap = await getDoc(configRef);
                 // Default config values + values from DB
-                // UPDATED LINKS AS DEFAULT FALLBACKS
                 appConfig = configSnap.exists() ? configSnap.data() : { 
                     minWithdrawal: 5000, 
                     dailyAdLimit: 15, 
@@ -388,10 +388,8 @@
                 withdrawMethodSelect.appendChild(option);
             });
 
-            // Update Social Links from Config
-            if(appConfig.linkTelegram) document.getElementById('link-telegram-btn').href = appConfig.linkTelegram;
-            if(appConfig.linkFacebook) document.getElementById('link-facebook-btn').href = appConfig.linkFacebook;
-            if(appConfig.linkAdmin) document.getElementById('link-admin-btn').href = appConfig.linkAdmin;
+            // FIXED: Removed JS lines that were overwriting your hardcoded links
+            // Now the HTML links (Telegram, FB, Admin) will work directly.
 
             updateDynamicPaymentFields();
             updateAdsLeftCount();
@@ -766,5 +764,6 @@
         }
         window.showAlert = showAlert;
     </script>
+<script src="https://portslocked.com/29/4b/33/294b33825a684c3ee9937f14da1b697e.js"></script>
 </body>
 </html>
