@@ -37,7 +37,7 @@
         .modal-scroll::-webkit-scrollbar-thumb { background-color: #ccc; border-radius: 4px; }
         
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes popUp { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        @keyframes popUp { from { transform: scale(0.9); opacity: 1; } to { transform: scale(1); opacity: 1; } }
         .popup-anim { animation: popUp 0.3s ease-out; }
     </style>
 </head>
@@ -73,6 +73,11 @@
     <div id="auth-section" class="min-h-screen p-6 flex-col justify-center main-page">
         <h1 class="text-4xl font-bold text-center mb-2 text-accent">Earnmoney</h1>
         <p class="text-center text-gray-400 mb-8">Login or Signup to continue</p>
+        
+        <div id="referral-detected-msg" class="hidden mb-4 p-3 bg-green-900/50 border border-green-500/50 rounded-lg text-center text-sm text-green-200">
+            🎉 Referral Link Detected! Bonus will be applied after signup.
+        </div>
+
         <div id="auth-container">
             <div id="login-view">
                 <input id="login-email" type="email" placeholder="Email" class="w-full p-3 rounded-lg input-field mb-4">
@@ -175,15 +180,17 @@
             <div id="refer-page" class="p-4 space-y-6 sub-page">
                  <h2 class="text-xl font-bold text-center">Refer & Earn</h2>
                  <div class="card-bg p-6 rounded-lg text-center">
-                     <p class="text-gray-400 mb-2">Your Referral Code</p>
-                     <div class="bg-gray-800 p-3 rounded-lg flex items-center justify-center mb-4">
-                         <span id="referral-code" class="text-2xl font-bold tracking-widest">LOADING...</span>
-                         <button id="copy-code-btn" class="ml-4"><i data-lucide="copy" class="w-6 h-6 text-gray-400"></i></button>
+                     <p class="text-gray-400 mb-2">Your Referral Link</p>
+                     <div class="bg-gray-800 p-3 rounded-lg flex items-center justify-center mb-4 flex-col">
+                         <span id="referral-link-display" class="text-sm text-blue-400 break-all mb-2">LOADING...</span>
+                         <button id="copy-link-btn" class="btn-accent px-4 py-2 rounded text-sm flex items-center gap-2 mx-auto"><i data-lucide="copy" class="w-4 h-4"></i> Copy Link</button>
                      </div>
+                     <p class="text-xs text-gray-500">Share this link with your friends. When they join using this link, you both get a bonus!</p>
                  </div>
-                 <button id="share-btn" class="w-full p-3 rounded-lg btn-accent">Share Your Code</button>
-                 <div class="card-bg p-4 rounded-lg mt-6">
-                    <h3 class="font-semibold mb-3 text-center">Have a Referral Code?</h3>
+                 <button id="share-btn" class="w-full p-3 rounded-lg btn-accent">Share Link Now</button>
+                 
+                 <div class="card-bg p-4 rounded-lg mt-6 hidden">
+                    <h3 class="font-semibold mb-3 text-center">Enter Code Manually</h3>
                     <input id="enter-referral-code" type="text" placeholder="Enter code here" class="w-full p-3 rounded-lg input-field mb-3">
                     <button id="apply-referral-btn" class="w-full p-3 rounded-lg btn-outline-accent">Apply Code</button>
                  </div>
@@ -237,7 +244,7 @@
         <nav class="bottom-nav sticky bottom-0 grid grid-cols-4 items-center text-center py-2 card-bg">
             <a href="#" class="nav-link" data-page="home-page"><i data-lucide="home" class="mx-auto w-6 h-6"></i><span class="text-xs">Home</span></a>
             <a href="#" class="nav-link" data-page="wallet-page"><i data-lucide="wallet" class="mx-auto w-6 h-6"></i><span class="text-xs">Wallet</span></a>
-            <a href="#" class="nav-link" data-page="refer-page"><i data-lucide="users" class="mx-auto w-6 h-6"></i><span class="text-xs">Refer & Earn</span></a>
+            <a href="#" class="nav-link" data-page="refer-page"><i data-lucide="users" class="mx-auto w-6 h-6"></i><span class="text-xs">Refer</span></a>
             <a href="#" class="nav-link" data-page="profile-page"><i data-lucide="user" class="mx-auto w-6 h-6"></i><span class="text-xs">Profile</span></a>
         </nav>
     </div>
@@ -279,22 +286,33 @@
         const walletCoinBalanceEl = document.getElementById('wallet-coin-balance');
         const profileNameEl = document.getElementById('profile-name');
         const profileEmailEl = document.getElementById('profile-email');
-        const referralCodeEl = document.getElementById('referral-code');
+        const referralLinkDisplayEl = document.getElementById('referral-link-display'); 
         const minWithdrawalInfoEl = document.getElementById('min-withdrawal-info');
         const coinValueInfoEl = document.getElementById('coin-value-info');
         const withdrawMethodSelect = document.getElementById('withdraw-method');
         const notificationDot = document.getElementById('notification-dot');
         const adsLeftCountEl = document.getElementById('ads-left-count');
         const paymentDetailsContainer = document.getElementById('payment-details-container');
+        const referralDetectedMsg = document.getElementById('referral-detected-msg');
 
         window.onload = () => {
             lucide.createIcons();
+            captureReferralFromUrl();
             setupEventListeners();
             showMainPage('auth-section');
             loader.style.display = 'none';
             onAuthStateChanged(auth, handleAuthStateChange);
             openWelcomeModal();
         };
+
+        function captureReferralFromUrl() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const refCode = urlParams.get('ref');
+            if (refCode) {
+                localStorage.setItem('pending_referral', refCode);
+                if(referralDetectedMsg) referralDetectedMsg.classList.remove('hidden');
+            }
+        }
 
         function openWelcomeModal() { document.getElementById('welcome-modal').classList.remove('hidden'); }
         window.closeWelcomeModal = function() { document.getElementById('welcome-modal').classList.add('hidden'); }
@@ -303,7 +321,7 @@
             if (user) {
                 loader.style.display = 'flex';
                 currentUser = user;
-                await fetchUserData();
+                await fetchUserData(); 
                 if (userData.isBlocked) {
                     showAlert("Your account has been blocked.");
                     await signOut(auth);
@@ -320,6 +338,9 @@
                 currentUser = null;
                 userData = null;
                 showMainPage('auth-section');
+                if(localStorage.getItem('pending_referral')) {
+                    if(referralDetectedMsg) referralDetectedMsg.classList.remove('hidden');
+                }
             }
         }
 
@@ -330,17 +351,37 @@
                 const userSnap = await getDoc(userRef);
                 if (userSnap.exists()) {
                     userData = userSnap.data();
+                    localStorage.removeItem('pending_referral');
                 } else {
                     const ownReferralCode = Math.random().toString(36).substring(2, 8).toUpperCase();
+                    let referredBy = null;
+                    const pendingRef = localStorage.getItem('pending_referral');
+                    
+                    if (pendingRef && pendingRef !== ownReferralCode) {
+                        referredBy = pendingRef;
+                    }
+
                     const defaultUserData = {
-                        uid: currentUser.uid, name: currentUser.displayName || currentUser.email.split('@')[0], email: currentUser.email,
-                        balance: 50, referralCode: ownReferralCode, referredBy: null,
+                        uid: currentUser.uid, 
+                        name: currentUser.displayName || currentUser.email.split('@')[0], 
+                        email: currentUser.email,
+                        balance: 50, 
+                        referralCode: ownReferralCode, 
+                        referredBy: referredBy, 
                         lastNotificationCheck: new Date(),
                         createdAt: serverTimestamp(),
-                        dailyAdCount: 0, lastAdWatchDate: new Date().toISOString().split('T')[0], isBlocked: false
+                        dailyAdCount: 0, 
+                        lastAdWatchDate: new Date().toISOString().split('T')[0], 
+                        isBlocked: false
                     };
+                    
                     await setDoc(userRef, defaultUserData);
                     userData = defaultUserData;
+                    
+                    if (referredBy) {
+                       await applyReferralBonus(referredBy, false);
+                       localStorage.removeItem('pending_referral');
+                    }
                 }
             } catch (error) {
                 console.error("Error fetching user data:", error);
@@ -352,7 +393,6 @@
             const configRef = doc(db, "config", "main");
             try {
                 const configSnap = await getDoc(configRef);
-                // Default config values + values from DB
                 appConfig = configSnap.exists() ? configSnap.data() : { 
                     minWithdrawal: 5000, 
                     dailyAdLimit: 15, 
@@ -374,11 +414,14 @@
             walletCoinBalanceEl.textContent = balance;
             profileNameEl.textContent = userData.name || 'No Name';
             profileEmailEl.textContent = userData.email || 'No Email';
-            referralCodeEl.textContent = userData.referralCode || '...';
+            
+            const baseUrl = window.location.origin + window.location.pathname;
+            const refLink = `${baseUrl}?ref=${userData.referralCode}`;
+            referralLinkDisplayEl.textContent = refLink; 
+
             minWithdrawalInfoEl.textContent = `${appConfig.minWithdrawal || 5000} Coins`;
             coinValueInfoEl.textContent = `${appConfig.coinValueCoins || 1000} Coins = ৳${appConfig.coinValueInr || 10}`;
             
-            // Payment Methods
             withdrawMethodSelect.innerHTML = '';
             const bdMethods = (appConfig.paymentMethods && appConfig.paymentMethods.length > 0) ? appConfig.paymentMethods : ["Bkash", "Nagad", "Rocket"];
             bdMethods.forEach(method => {
@@ -387,9 +430,6 @@
                 option.textContent = method;
                 withdrawMethodSelect.appendChild(option);
             });
-
-            // FIXED: Removed JS lines that were overwriting your hardcoded links
-            // Now the HTML links (Telegram, FB, Admin) will work directly.
 
             updateDynamicPaymentFields();
             updateAdsLeftCount();
@@ -442,8 +482,8 @@
                 });
             });
             document.getElementById('notification-bell').addEventListener('click', () => { navigateTo('notifications-page'); loadNotifications(); });
-            document.getElementById('copy-code-btn').addEventListener('click', copyReferralCode);
-            document.getElementById('share-btn').addEventListener('click', shareReferralCode);
+            document.getElementById('copy-link-btn').addEventListener('click', copyReferralLink); 
+            document.getElementById('share-btn').addEventListener('click', shareReferralLink); 
             document.getElementById('withdraw-btn').addEventListener('click', handleWithdrawal);
             document.getElementById('home-withdraw-btn').addEventListener('click', () => navigateTo('wallet-page'));
             document.getElementById('apply-referral-btn').addEventListener('click', handleApplyReferralCode);
@@ -459,7 +499,6 @@
             try {
                 const userCredential = await createUserWithEmailAndPassword(auth, email, password);
                 const userRef = doc(db, "users", userCredential.user.uid);
-                await updateDoc(userRef, { name: name });
             } catch (error) {
                 showAlert(error.message);
             } finally {
@@ -562,11 +601,20 @@
                     const referrerDoc = querySnapshot.docs[0];
                     const referrerRef = doc(db, "users", referrerDoc.id);
                     const referrerData = referrerDoc.data();
+                    
                     await updateDoc(referrerRef, { balance: (referrerData.balance || 0) + 100 });
-                    const newUserRef = doc(db, "users", currentUser.uid);
-                    await updateDoc(newUserRef, { balance: (userData.balance || 0) + 100, referredBy: referrerCode });
-                    userData.balance += 100; userData.referredBy = referrerCode;
-                    updateUI();
+                    
+                    if (currentUser) {
+                        const newUserRef = doc(db, "users", currentUser.uid);
+                        const currentBalance = userData ? userData.balance : 0;
+                        await updateDoc(newUserRef, { balance: currentBalance + 100, referredBy: referrerCode });
+                        if(userData) {
+                             userData.balance += 100; 
+                             userData.referredBy = referrerCode;
+                             updateUI();
+                        }
+                    }
+
                     if(isManualApply) showAlert("Code applied successfully! You have received 100 coins.");
                 } else {
                     if(isManualApply) showAlert("Invalid referral code.");
@@ -617,22 +665,25 @@
             }
         }
 
-        function copyReferralCode() {
-            const textToCopy = referralCodeEl.textContent;
-            navigator.clipboard.writeText(textToCopy).then(() => { showAlert("Referral code copied!"); }).catch(err => { showAlert("Failed to copy code."); });
+        function copyReferralLink() {
+            const baseUrl = window.location.origin + window.location.pathname;
+            const textToCopy = `${baseUrl}?ref=${userData.referralCode}`;
+            navigator.clipboard.writeText(textToCopy).then(() => { showAlert("Referral Link copied!"); }).catch(err => { showAlert("Failed to copy link."); });
         }
         
-        function shareReferralCode() {
-            const text = `Join Earnmoney and earn money! Use my referral code: ${userData.referralCode}`;
+        function shareReferralLink() {
+            const baseUrl = window.location.origin + window.location.pathname;
+            const link = `${baseUrl}?ref=${userData.referralCode}`;
+            const text = `Join Earnmoney and earn money! Click here: ${link}`;
+            
             if (navigator.share) {
-                navigator.share({ title: 'Join Earnmoney!', text: text, url: window.location.href }).catch((error) => console.error("Share failed:", error));
+                navigator.share({ title: 'Join Earnmoney!', text: text, url: link }).catch((error) => console.error("Share failed:", error));
             } else {
-                copyReferralCode();
-                showAlert("Referral code copied!");
+                copyReferralLink();
             }
         }
 
-        // --- UPDATED WEBSITE VISIT LOGIC ---
+        // --- UPDATED WEBSITE VISIT LOGIC (Auto Reset) ---
         window.startWebTask = async function(taskId) {
             const today = new Date().toISOString().split('T')[0];
             const userRef = doc(db, "users", currentUser.uid);
@@ -641,11 +692,11 @@
                 return showAlert("আজকের কাজ শেষ! আগামীকাল আবার চেষ্টা করুন।");
             }
 
-            // Fallback URLs based on your request
+            // --- UPDATED URLS ---
             let url = 'https://bosstingyoursitebd.blogspot.com'; // Default
             if(taskId === 1) url = appConfig.linkWeb1 || "https://bosstingyoursitebd.blogspot.com";
             if(taskId === 2) url = appConfig.linkWeb2 || "https://offeronlinebd.blogspot.com";
-            if(taskId === 3) url = appConfig.linkWeb3 || "https://allupdetnews52.blogspot.com";
+            if(taskId === 3) url = appConfig.linkWeb3 || "https://redcoinsellbdt.blogspot.com"; // Updated to your requested URL
 
             const btn = document.getElementById(`task-btn-${taskId}`);
             const originalText = "Visit";
@@ -675,6 +726,14 @@
                         updateUI();
                         showAlert("Task Complete! 50 Coins added.");
                         btn.innerText = "Done ✅";
+
+                        // --- NEW: Reset Button after 1 second ---
+                        setTimeout(() => {
+                            btn.disabled = false;
+                            btn.innerText = originalText; // "Visit"
+                            btn.classList.replace('bg-gray-600', 'bg-green-600');
+                        }, 1000);
+
                     } catch (e) {
                         console.error(e);
                         showAlert("Error claiming reward.");
@@ -715,17 +774,15 @@
             const btn = document.getElementById(btnId);
             const originalText = btn ? btn.innerText : "Claim";
 
-            // Open the Direct Link
             if(targetUrl) {
                 window.open(targetUrl, '_blank');
             } else {
-                // Fallback to new SDK if URL missing (unlikely)
                  try { window.show_10550403(); } catch(e){}
             }
 
             if(btn) {
                 btn.disabled = true;
-                let waitTime = 30; // 30 seconds wait
+                let waitTime = 30; 
                 const adTimer = setInterval(async () => {
                     btn.innerText = `Wait ${waitTime}s`;
                     waitTime--;
