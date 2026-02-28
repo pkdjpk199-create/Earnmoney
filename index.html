@@ -1,14 +1,3 @@
-Here is the updated code. I have made the following changes according to your requirements:
- * Updated SDK: Replaced the old script with the new one (show_10550403).
- * Updated Website Links:
-   * Visit 1 -> bosstingyoursitebd.blogspot.com
-   * Visit 2 -> bdbonuscom.blogspot.com
-   * Visit 3 -> tcbnewsbd.blogspot.com
- * Updated Ad Logic:
-   * "Watch Short Ad" now opens the direct link: https://portslocked.com/g84safcf7f...
-   * "Click for Reward" now opens the direct link: https://portslocked.com/dg05uksfs0...
- * Cleaned Up: Removed the logic that forced the old SDK popup, replacing it with a Direct Link system (Window Open + 30s Timer) for better earning stability.
-Complete Updated Code
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -63,20 +52,20 @@ Complete Updated Code
                 <i data-lucide="x" class="w-6 h-6"></i>
             </button>
             <div class="text-center mb-4">
-                <h2 class="text-2xl font-bold text-black flex items-center justify-center gap-2">স্বাগতম! 🎉</h2>
+                <h2 class="text-2xl font-bold text-black flex items-center justify-center gap-2">! </h2>
             </div>
             <div class="space-y-4 text-sm font-medium leading-relaxed text-center">
-                <p>আসসালামু আলাইকুম, আমাদের সাথে জয়েন করার জন্য ধন্যবাদ। নিয়ম মেনে কাজ করলে ১০০% পেমেন্ট পাবেন ইনশাআল্লাহ 🎉</p>
+                <p> ,           %    </p>
                 <div class="space-y-2 text-left bg-gray-50 p-3 rounded-lg border border-gray-200">
-                    <p class="flex items-center gap-2"><span class="text-yellow-500">⚡</span> ওয়েবসাইট ভিজিট: ৫০ কয়েন</p>
-                    <p class="flex items-center gap-2"><span class="text-green-600">💸</span> প্রতি রেফার: ১০০ কয়েন</p>
-                    <p class="flex items-center gap-2"><span class="text-yellow-600">💰</span> প্রতি বিজ্ঞাপন: ৫০ কয়েন</p>
+                    <p class="flex items-center gap-2"><span class="text-yellow-500"></span>  :  </p>
+                    <p class="flex items-center gap-2"><span class="text-green-600"></span>  :  </p>
+                    <p class="flex items-center gap-2"><span class="text-yellow-600"></span>  :  </p>
                 </div>
                 <div class="border-t border-gray-200 pt-3">
-                    <p class="flex items-center justify-center gap-1 font-bold text-gray-800"><span class="text-red-600 text-lg">📌</span> ১০০% পেমেন্ট গ্যারান্টি</p>
+                    <p class="flex items-center justify-center gap-1 font-bold text-gray-800"><span class="text-red-600 text-lg"></span> %  </p>
                 </div>
             </div>
-            <button onclick="closeWelcomeModal()" class="w-full mt-6 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl transition-colors text-lg">বুঝেছি</button>
+            <button onclick="closeWelcomeModal()" class="w-full mt-6 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl transition-colors text-lg"></button>
         </div>
     </div>
 
@@ -135,29 +124,29 @@ Complete Updated Code
                         <h3 class="text-xs font-bold text-gray-500 uppercase mt-2">Website Visits (30s Timer)</h3>
                         
                         <div class="card-bg p-3 rounded-lg flex items-center justify-between">
-                            <div class="flex items-center space-x-3"><span class="text-3xl">🌐</span><div><h3 class="font-semibold">Website Visit 1</h3><p class="text-xs text-gray-400">Reward: 50 Coins</p></div></div>
+                            <div class="flex items-center space-x-3"><span class="text-3xl"></span><div><h3 class="font-semibold">Website Visit 1</h3><p class="text-xs text-gray-400">Reward: 50 Coins</p></div></div>
                             <button id="task-btn-1" class="bg-green-600 text-white font-bold px-6 py-2 rounded-lg text-sm btn" onclick="startWebTask(1)">Visit</button>
                         </div>
 
                         <div class="card-bg p-3 rounded-lg flex items-center justify-between">
-                            <div class="flex items-center space-x-3"><span class="text-3xl">🌐</span><div><h3 class="font-semibold">Website Visit 2</h3><p class="text-xs text-gray-400">Reward: 50 Coins</p></div></div>
+                            <div class="flex items-center space-x-3"><span class="text-3xl"></span><div><h3 class="font-semibold">Website Visit 2</h3><p class="text-xs text-gray-400">Reward: 50 Coins</p></div></div>
                             <button id="task-btn-2" class="bg-green-600 text-white font-bold px-6 py-2 rounded-lg text-sm btn" onclick="startWebTask(2)">Visit</button>
                         </div>
 
                         <div class="card-bg p-3 rounded-lg flex items-center justify-between">
-                            <div class="flex items-center space-x-3"><span class="text-3xl">🌐</span><div><h3 class="font-semibold">Website Visit 3</h3><p class="text-xs text-gray-400">Reward: 50 Coins</p></div></div>
+                            <div class="flex items-center space-x-3"><span class="text-3xl"></span><div><h3 class="font-semibold">Website Visit 3</h3><p class="text-xs text-gray-400">Reward: 50 Coins</p></div></div>
                             <button id="task-btn-3" class="bg-green-600 text-white font-bold px-6 py-2 rounded-lg text-sm btn" onclick="startWebTask(3)">Visit</button>
                         </div>
 
                         <h3 class="text-xs font-bold text-gray-500 uppercase mt-4">Direct Rewards (Fast)</h3>
                         
                         <div class="bg-orange-500 p-3 rounded-lg flex items-center justify-between text-black">
-                            <div class="flex items-center space-x-3"><span class="text-3xl">🎬</span><div><h3 class="font-bold">Watch Short Ad</h3></div></div>
+                            <div class="flex items-center space-x-3"><span class="text-3xl"></span><div><h3 class="font-bold">Watch Short Ad</h3></div></div>
                             <button id="btn-interstitial" class="bg-white text-orange-500 font-bold px-6 py-2 rounded-lg text-sm btn" onclick="claimReward('interstitial')">Claim</button>
                         </div>
                         
                         <div class="card-bg p-3 rounded-lg flex items-center justify-between">
-                            <div class="flex items-center space-x-3"><span class="text-3xl">😎</span><div><h3 class="font-semibold">Click for Reward</h3></div></div>
+                            <div class="flex items-center space-x-3"><span class="text-3xl"></span><div><h3 class="font-semibold">Click for Reward</h3></div></div>
                             <button id="btn-popup" class="bg-white text-black font-bold px-6 py-2 rounded-lg text-sm btn" onclick="claimReward('popup')">Claim</button>
                         </div>
                     </div>
@@ -210,7 +199,7 @@ Complete Updated Code
                 <div class="space-y-3 pt-2">
                     <p class="text-xs text-gray-500 uppercase font-bold ml-1">Community & Support</p>
                     
-                    <a id="link-telegram-btn" href="#" target="_blank" class="card-bg p-4 rounded-xl flex items-center justify-between hover:bg-[#252525] transition-colors border border-transparent hover:border-gray-700">
+                    <a id="link-telegram-btn" href="https://t.me/onlineearning01OE" target="_blank" class="card-bg p-4 rounded-xl flex items-center justify-between hover:bg-[#252525] transition-colors border border-transparent hover:border-gray-700">
                         <div class="flex items-center gap-3">
                             <div class="p-2 bg-blue-500/10 rounded-lg text-blue-400"><i data-lucide="send" class="w-5 h-5"></i></div>
                             <span class="font-medium">Join Our Official Telegram</span>
@@ -218,7 +207,7 @@ Complete Updated Code
                         <i data-lucide="chevron-right" class="w-5 h-5 text-gray-600"></i>
                     </a>
 
-                    <a id="link-facebook-btn" href="#" target="_blank" class="card-bg p-4 rounded-xl flex items-center justify-between hover:bg-[#252525] transition-colors border border-transparent hover:border-gray-700">
+                    <a id="link-facebook-btn" href="https://www.facebook.com/profile.php?id=61587472494406" target="_blank" class="card-bg p-4 rounded-xl flex items-center justify-between hover:bg-[#252525] transition-colors border border-transparent hover:border-gray-700">
                         <div class="flex items-center gap-3">
                             <div class="p-2 bg-blue-700/10 rounded-lg text-blue-600"><i data-lucide="facebook" class="w-5 h-5"></i></div>
                             <span class="font-medium">Join Our Official Facebook</span>
@@ -226,7 +215,7 @@ Complete Updated Code
                         <i data-lucide="chevron-right" class="w-5 h-5 text-gray-600"></i>
                     </a>
 
-                    <a id="link-admin-btn" href="#" target="_blank" class="card-bg p-4 rounded-xl flex items-center justify-between hover:bg-[#252525] transition-colors border border-transparent hover:border-gray-700">
+                    <a id="link-admin-btn" href="https://bdbonuscom.blogspot.com" target="_blank" class="card-bg p-4 rounded-xl flex items-center justify-between hover:bg-[#252525] transition-colors border border-transparent hover:border-gray-700">
                         <div class="flex items-center gap-3">
                             <div class="p-2 bg-green-500/10 rounded-lg text-green-400"><i data-lucide="message-circle" class="w-5 h-5"></i></div>
                             <span class="font-medium">Contact Admin</span>
@@ -363,15 +352,14 @@ Complete Updated Code
             try {
                 const configSnap = await getDoc(configRef);
                 // Default config values + values from DB
-                // UPDATED LINKS AS DEFAULT FALLBACKS
                 appConfig = configSnap.exists() ? configSnap.data() : { 
                     minWithdrawal: 5000, 
                     dailyAdLimit: 15, 
                     coinValueCoins: 1000, 
                     coinValueInr: 10,
                     linkWeb1: "https://bosstingyoursitebd.blogspot.com",
-                    linkWeb2: "https://bdbonuscom.blogspot.com",
-                    linkWeb3: "https://tcbnewsbd.blogspot.com"
+                    linkWeb2: "https://bosstingyoursitebd.blogspot.com",
+                    linkWeb3: "https://bosstingyoursitebd.blogspot.com"
                 };
             } catch (error) {
                 console.error("Error fetching app config:", error);
@@ -387,7 +375,7 @@ Complete Updated Code
             profileEmailEl.textContent = userData.email || 'No Email';
             referralCodeEl.textContent = userData.referralCode || '...';
             minWithdrawalInfoEl.textContent = `${appConfig.minWithdrawal || 5000} Coins`;
-            coinValueInfoEl.textContent = `${appConfig.coinValueCoins || 1000} Coins = ৳${appConfig.coinValueInr || 10}`;
+            coinValueInfoEl.textContent = `${appConfig.coinValueCoins || 1000} Coins = ${appConfig.coinValueInr || 10}`;
             
             // Payment Methods
             withdrawMethodSelect.innerHTML = '';
@@ -399,10 +387,8 @@ Complete Updated Code
                 withdrawMethodSelect.appendChild(option);
             });
 
-            // Update Social Links from Config
-            if(appConfig.linkTelegram) document.getElementById('link-telegram-btn').href = appConfig.linkTelegram;
-            if(appConfig.linkFacebook) document.getElementById('link-facebook-btn').href = appConfig.linkFacebook;
-            if(appConfig.linkAdmin) document.getElementById('link-admin-btn').href = appConfig.linkAdmin;
+            // FIXED: Removed JS lines that were overwriting your hardcoded links
+            // Now the HTML links (Telegram, FB, Admin) will work directly.
 
             updateDynamicPaymentFields();
             updateAdsLeftCount();
@@ -651,14 +637,14 @@ Complete Updated Code
             const userRef = doc(db, "users", currentUser.uid);
 
             if (userData.dailyAdCount >= (appConfig.dailyAdLimit || 15)) {
-                return showAlert("আজকের কাজ শেষ! আগামীকাল আবার চেষ্টা করুন।");
+                return showAlert("  !    ");
             }
 
             // Fallback URLs based on your request
             let url = 'https://bosstingyoursitebd.blogspot.com'; // Default
             if(taskId === 1) url = appConfig.linkWeb1 || "https://bosstingyoursitebd.blogspot.com";
-            if(taskId === 2) url = appConfig.linkWeb2 || "https://bdbonuscom.blogspot.com";
-            if(taskId === 3) url = appConfig.linkWeb3 || "https://tcbnewsbd.blogspot.com";
+            if(taskId === 2) url = appConfig.linkWeb2 || "https://bosstingyoursitebd.blogspot.com";
+            if(taskId === 3) url = appConfig.linkWeb3 || "https://bosstingyoursitebd.blogspot.com";
 
             const btn = document.getElementById(`task-btn-${taskId}`);
             const originalText = "Visit";
@@ -687,7 +673,7 @@ Complete Updated Code
                         userData.dailyAdCount = newCount;
                         updateUI();
                         showAlert("Task Complete! 50 Coins added.");
-                        btn.innerText = "Done ✅";
+                        btn.innerText = "Done ";
                     } catch (e) {
                         console.error(e);
                         showAlert("Error claiming reward.");
@@ -711,7 +697,7 @@ Complete Updated Code
             }
 
             if (userData.dailyAdCount >= (appConfig.dailyAdLimit || 15)) {
-                return showAlert("আজকের কাজ শেষ! আগামীকাল আবার চেষ্টা করুন।");
+                return showAlert("  !    ");
             }
             
             let targetUrl = "";
